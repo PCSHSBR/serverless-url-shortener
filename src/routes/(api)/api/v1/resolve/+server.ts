@@ -1,11 +1,12 @@
-import { error, redirect } from '@sveltejs/kit';
+import { error, json, redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { admin } from '$lib/server/firebase';
+import { ERRORS } from '$lib/message';
 
 export const GET: RequestHandler = async ({ url }) => {
   const slug = url.searchParams.get('query');
   if (!slug) {
-    throw error(400, 'Missing query');
+    throw error(400, ERRORS.MISSING_QUERY)
   }
   const doc = await admin
     .firestore()
@@ -13,20 +14,10 @@ export const GET: RequestHandler = async ({ url }) => {
     .doc(`pcshsbrpagelink-${slug}`)
     .get();
   if (!doc.exists)
-    return new Response('not found', {
-      status: 404,
-      headers: {
-        'content-type': 'text/plain'
-      }
-    });
+    throw error(404, ERRORS.NOT_FOUND)
   const data = doc.data();
   if (!data) {
-    return new Response('internal server error', {
-      status: 500,
-      headers: {
-        'content-type': 'text/plain'
-      }
-    })
+    throw error(500, ERRORS.INTERNAL_SERVER_ERROR)
   }
-  throw redirect(302, data.url);
+  throw redirect(302, data.longLink);
 }
