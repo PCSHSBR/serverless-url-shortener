@@ -35,7 +35,6 @@
 					[blob.type]: blob
 				})
 			]);
-			console.log('Image copied.');
 		} catch (err: any) {
 			console.error(err.name, err.message);
 		}

@@ -77,7 +77,7 @@
 					<ul class="list-inside text-left">
 						{#each linkCreateError as em}
 							<li>
-								{em}
+								{JSON.parse(em)[0].message}
 							</li>
 						{/each}
 					</ul>
@@ -148,9 +148,10 @@
 								</div>
 								<span class="label">
 									<span class="label-text-alt"
-										>Note: Custom links can only use the letters a-z, A-Z, 0-9,
-										minus sign (<code>-</code>), and underscore (<code>_</code>) only
-										and must not exceed 32 characters and not less than 3 characters. Do not contain vulgar or inappropriate words.</span
+										>Note: Custom links can only use the letters a-z, A-Z, 0-9, minus sign (<code
+											>-</code
+										>), and underscore (<code>_</code>) only and must not exceed 32 characters and
+										not less than 3 characters. Do not contain vulgar or inappropriate words.</span
 									>
 								</span>
 							</div>
