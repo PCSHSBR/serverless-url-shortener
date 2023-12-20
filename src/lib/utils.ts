@@ -16,5 +16,7 @@ export function isURL(url: string): boolean {
 
 export function getSlugFromURL(url: string): string {
 	const parsed = new URL(url);
-	return `${slug(parsed.hostname)}-${slug(parsed.pathname.slice(1))}`
+	return `${slug(parsed.pathname.slice(1), {
+		lower: false,
+	})}`
 }

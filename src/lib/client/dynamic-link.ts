@@ -102,6 +102,9 @@ export async function createLink(options: CreateLinkSchema) {
     unguessable = false,
   } = result.data;
   if (!userAuth) throw new Error('กรุณาเข้าสู่ระบบก่อนสร้างลิงก์');
+  const safetyResponse = await fetch(`/api/v1/check?query=${link}`).then(r => r.json()).catch(e => console.error(e));
+  const linkDomain = new URL(link).hostname;
+  if (safetyResponse.isOk !== true) return { success: false, error: { message: `${linkDomain} is not allowed to be created.` } }
   const response = await sendRequest('POST', {
     dynamicLinkInfo: {
       domainUriPrefix: `https://${domain}`,
@@ -120,6 +123,7 @@ export async function createLink(options: CreateLinkSchema) {
     domain,
     longLink: link,
     shortLink,
+    shortSlug: getSlugFromURL(shortLink),
     createAt: serverTimestamp(),
     createBy: userAuth.currentUser?.uid
   })

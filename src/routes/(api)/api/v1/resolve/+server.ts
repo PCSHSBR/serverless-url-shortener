@@ -11,7 +11,7 @@ export const GET: RequestHandler = async ({ url }) => {
   const doc = await admin
     .firestore()
     .collection('links')
-    .doc(`pcshsbrpagelink-${slug}`)
+    .doc(`${slug}`)
     .get();
   if (!doc.exists)
     throw error(404, ERRORS.NOT_FOUND)

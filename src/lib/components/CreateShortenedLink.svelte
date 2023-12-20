@@ -41,7 +41,10 @@
 			if (result?.error?.issues?.lenght > 0) {
 				linkCreateError.push(...result?.error.issues.map((issue) => issue.message));
 			} else {
-				linkCreateError.push(result?.error?.message || 'There was an error creating the link.');
+				linkCreateError.push(
+					JSON.stringify([{ message: result?.error?.message }]) ||
+						JSON.stringify([{ message: 'There was an error creating the link.' }])
+				);
 			}
 			linkCreateError = linkCreateError.filter((v, i, a) => a.indexOf(v) === i);
 			return;
@@ -105,8 +108,8 @@
 								</p>
 							</CreateOptionTile>
 							<!-- <CreateOptionTile type="custom" bind:userInput>
-								<h3>ปรับแต่งลิงก์เอง</h3>
-								<p class="label-text">เลือกว่าจะให้ลิงก์เป็นข้อความว่าอะไร</p>
+								<h3>Custom</h3>
+								<p class="label-text">Custom what link will look like.</p>
 							</CreateOptionTile> -->
 						</div>
 						{#if userInput.linkOption == 'custom'}

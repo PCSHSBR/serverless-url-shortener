@@ -36,7 +36,7 @@
 				})
 			]);
 		} catch (err: any) {
-			console.error(err.name, err.message);
+			console.error('error copying image',{cause: err});
 		}
 	}
 </script>
